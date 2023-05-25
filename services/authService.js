@@ -51,7 +51,7 @@ const registrationService = async (email, password, avatarUrl) => {
 };
 
 const loginService = async (email, password) => {
-  const owner = await Owner.findOne({ email, verify: true, loggedIn: false });
+  const owner = await Owner.findOne({ email, verify: true });
   if (owner && (await bcrypt.compare(password, owner.password))) {
     const token = jwt.sign(
       {
