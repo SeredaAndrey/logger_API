@@ -88,7 +88,7 @@ const verificationService = async (email) => {
   }
   await Owner.findByIdAndUpdate(
     { _id: owner._id },
-    { vToken: null, verify: true },
+    { vToken: null, verify: true, loggedIn: true },
     { new: true }
   );
   const token = jwt.sign(
