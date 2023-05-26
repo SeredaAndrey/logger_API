@@ -13,7 +13,6 @@ const router = express.Router();
 
 router.post("/reg", asyncWrapper(registrationController));
 router.post("/login", asyncWrapper(loginController));
-// router.get("/verify/:vToken", asyncWrapper(verifycationController));
 router.post("/verify", asyncWrapper(verifycationController));
 
 router.use(authMiddleware);

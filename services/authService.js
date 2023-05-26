@@ -79,18 +79,29 @@ const logoutService = async (_id) => {
 };
 
 const verificationService = async (email) => {
-  const data = await Owner.findOne({
+  const owner = await Owner.findOne({
     email,
     verify: false,
   });
-  if (!data) {
+  if (!owner) {
     return;
   }
-  return await Owner.findByIdAndUpdate(
-    { _id: data._id },
+  await Owner.findByIdAndUpdate(
+    { _id: owner._id },
     { vToken: null, verify: true },
     { new: true }
   );
+  const token = jwt.sign(
+    {
+      _id: owner._id,
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: "14d" }
+  );
+  return {
+    token: token,
+    owner: owner,
+  };
 };
 
 const deleteNotAutorizedOwnerService = async () => {

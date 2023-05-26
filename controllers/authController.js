@@ -73,6 +73,7 @@ const verifycationController = async (req, res, next) => {
     return res.status(200).json({
       code: 200,
       message: "Verification successful",
+      owner: data,
     });
   } else {
     throw new FoundingError("User not found");
