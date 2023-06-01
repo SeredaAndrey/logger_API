@@ -3,7 +3,7 @@ const Generator = require("../schemas/generatorSchemas");
 const getGeneratorService = async (ownerId) => {
   return await Generator.findOne(
     { owner: ownerId },
-    { owner: 0, _id: 0, __v: 0 }
+    { owner: 0, __v: 0 }
   );
 };
 
