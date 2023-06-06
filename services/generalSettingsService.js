@@ -3,7 +3,7 @@ const GeneralSetting = require("../schemas/generalSettingSchemas");
 const getGeneralSettingsService = async (ownerId) => {
   return await GeneralSetting.findOne(
     { owner: ownerId },
-    { owner: 0, _id: 0, __V: 0 }
+    { owner: 0,  __V: 0 }
   );
 };
 
