@@ -6,7 +6,7 @@ const workingCyclesSchema = Joi.object({
   workingTimeOfCycle: Joi.number(),
   volumeElecricalGeneration: Joi.number().positive(),
   changeOil: Joi.boolean(),
-  refueling: Joi.number().positive(),
+  refueling: Joi.number(),
 });
 
 const getRequestSchema = Joi.object({
