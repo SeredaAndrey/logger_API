@@ -3,6 +3,7 @@ const Joi = require("joi");
 const workingCyclesSchema = Joi.object({
   timestampStart: Joi.date(),
   timestampStop: Joi.date(),
+  workingTimeOfCycle: Joi.number(),
   volumeElecricalGeneration: Joi.number().positive(),
   changeOil: Joi.boolean(),
   refueling: Joi.number().positive(),

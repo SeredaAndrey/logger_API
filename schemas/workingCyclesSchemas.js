@@ -14,6 +14,11 @@ const workingCycles = new Schema(
       default: Date.now(),
       required: true,
     },
+    workingTimeOfCycle: {
+      type: Number,
+      default: null,
+      required: true,
+    },
     volumeElecricalGeneration: {
       type: Number,
       default: null,
