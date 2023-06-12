@@ -25,22 +25,19 @@ const getAllWorkingCyclesController = async (req, res, next) => {
   if (!reqValidate.error) {
     limit = parseInt(limit);
     const skip = (parseInt(page) - 1) * limit;
+
     let correctSort;
-    switch (sort) {
-      case "ascending": {
-        correctSort = 1;
-      }
-      case "descending": {
-        correctSort = -1;
-      }
-      default:
+    if (sort === "ascending") {
+      correctSort = 1;
+    } else if (sort === "descending") {
+      correctSort = -1;
     }
 
     const data = await getAllWorkingCyclesService(ownerId, {
       skip,
       limit,
       filter,
-      sort: correctSort,
+      correctSort,
       dateStart,
       dateStop,
     });
