@@ -13,12 +13,37 @@ const {
 
 const getAllWorkingCyclesController = async (req, res, next) => {
   const ownerId = req.owner._id;
-  let { page = 1, limit = 10, filter, sort, dateStart, dateStop } = req.query;
+  let {
+    page = 1,
+    limit = 10,
+    filter,
+    sort,
+    dateStart = null,
+    dateStop = null,
+  } = req.query;
   const reqValidate = getRequestSchema.validate(req.query);
-  limit = parseInt(limit);
-  const skip = (parseInt(page) - 1) * limit;
   if (!reqValidate.error) {
-    const data = await getAllWorkingCyclesService(ownerId, { skip, limit });
+    limit = parseInt(limit);
+    const skip = (parseInt(page) - 1) * limit;
+    let correctSort;
+    switch (sort) {
+      case "ascending": {
+        correctSort = 1;
+      }
+      case "descending": {
+        correctSort = -1;
+      }
+      default:
+    }
+
+    const data = await getAllWorkingCyclesService(ownerId, {
+      skip,
+      limit,
+      filter,
+      sort: correctSort,
+      dateStart,
+      dateStop,
+    });
     if (data) {
       res.status(200).json({
         message: "succes",

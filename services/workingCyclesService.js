@@ -1,9 +1,9 @@
 const WorkingCycles = require("../schemas/workingCyclesSchemas");
 
-const getAllWorkingCyclesService = async (ownerId, { skip, limit }) => {
+const getAllWorkingCyclesService = async (ownerId, { skip, limit, sort }) => {
   return await WorkingCycles.find({ owner: ownerId })
     .select({ __v: 0, owner: 0 })
-    .sort({ timestampStart: 1 })
+    .sort({ timestampStart: sort })
     .skip(skip)
     .limit(limit);
 };
