@@ -13,7 +13,7 @@ const {
 
 const getAllWorkingCyclesController = async (req, res, next) => {
   const ownerId = req.owner._id;
-  let { page = 1, limit = 10 } = req.query;
+  let { page = 1, limit = 10, filter, sort, dateStart, dateStop } = req.query;
   const reqValidate = getRequestSchema.validate(req.query);
   limit = parseInt(limit);
   const skip = (parseInt(page) - 1) * limit;
