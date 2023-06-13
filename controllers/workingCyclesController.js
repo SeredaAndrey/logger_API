@@ -27,10 +27,30 @@ const getAllWorkingCyclesController = async (req, res, next) => {
     const skip = (parseInt(page) - 1) * limit;
 
     let correctSort;
-    if (sort === "ascending") {
-      correctSort = 1;
-    } else if (sort === "descending") {
-      correctSort = -1;
+    let correctFilter;
+
+    switch (sort) {
+      case "ascending":
+        correctSort = 1;
+        break;
+      case "descending":
+        correctSort = -1;
+        break;
+    }
+
+    switch (filter) {
+      case "start":
+        correctFilter = "timestampStart";
+        break;
+      case "stop":
+        correctFilter = "timestampStop";
+        break;
+      case "cycle":
+        correctFilter = "workingTimeOfCycle";
+        break;
+      case "gen":
+        correctFilter = "volumeElecricalGeneration";
+        break;
     }
 
     const data = await getAllWorkingCyclesService(ownerId, {
@@ -38,6 +58,7 @@ const getAllWorkingCyclesController = async (req, res, next) => {
       limit,
       filter,
       correctSort,
+      correctFilter,
       dateStart,
       dateStop,
     });
