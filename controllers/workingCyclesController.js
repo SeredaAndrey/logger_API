@@ -18,8 +18,8 @@ const getAllWorkingCyclesController = async (req, res, next) => {
     limit = 10,
     filter,
     sort,
-    dateStart = null,
-    dateStop = null,
+    dateStart = 0,
+    dateStop = Date.now(),
   } = req.query;
   const reqValidate = getRequestSchema.validate(req.query);
   if (!reqValidate.error) {
