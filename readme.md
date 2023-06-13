@@ -30,6 +30,7 @@ DELETE: /api/setting/:settingsId, heder:Autorization: Bearer token
 
 Create, Patching and Getting working cycles
 GET: /api/cycles, heder:Autorization: Bearer token
+(example: /api/cycles/?filter:start&sort:ascending&dateStart=1685566800000&dateStop=1688072400000&page=1&limit=10)
 GET: /api/cycles/:cycleId, heder:Autorization: Bearer token
 POST: /api/cycles, heder:Autorization: Bearer token
 PATCH: /api/cycles/:cycleId, heder:Autorization: Bearer token
