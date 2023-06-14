@@ -15,7 +15,7 @@ const getAllWorkingCyclesController = async (req, res, next) => {
   const ownerId = req.owner._id;
   let {
     page = 1,
-    limit = 10,
+    limit = 100,
     filter,
     sort,
     dateStart = 0,
