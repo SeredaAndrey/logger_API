@@ -7,7 +7,6 @@ require("dotenv").config();
 
 const { authRouter } = require("./routes/authRouter");
 const { ownerRouter } = require("./routes/ownerRouter");
-const { fileRouter } = require("./routes/fileRouter");
 const { generatorRouter } = require("./routes/generatorRouter");
 const { generalsettingsRouter } = require("./routes/generalSettingsRouter");
 const { workingCyclesRouter } = require("./routes/workingCyclesRouter");
@@ -27,7 +26,6 @@ app.use(express.json());
 
 app.use("/api/auth", authRouter);
 app.use("/api/owner", ownerRouter);
-app.use("/api/owner", fileRouter);
 
 app.use("/api/generator", generatorRouter);
 app.use("/api/setting", generalsettingsRouter);
@@ -44,9 +42,6 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: err.message });
 });
 
-cron.schedule("*/10 * * * *", () => {
-  deleteTMPFileController();
-});
 cron.schedule("*/10 * * * *", () => {
   deleteNotAutorizedOwnerService();
 });

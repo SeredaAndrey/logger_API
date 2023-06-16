@@ -24,7 +24,6 @@ const patchOwnerSubscriptionService = async (_id, subscription) => {
 };
 
 const patchOwnerNameService = async (_id, body) => {
- // console.log("BODY: ", body);
   const data = await Owner.findOneAndUpdate({ _id, loggedIn: true }, body, {
     new: true,
   });

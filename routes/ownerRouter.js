@@ -8,6 +8,8 @@ const {
   patchOwnerNameController,
 } = require("../controllers/ownerController");
 const { authMiddleware } = require("../middleware/authMiddleware");
+const uploadAvatarCloud = require("../middleware/uploadAvatarMiddleware");
+const { fileUploadController } = require("../controllers/fileController");
 
 const router = express.Router();
 
@@ -18,5 +20,10 @@ router.use(authMiddleware);
 router.get("/", asyncWrapper(getOwnerDataController));
 router.patch("/subscription", asyncWrapper(patchOwnerSubscriptionController));
 router.patch("/patchName", asyncWrapper(patchOwnerNameController));
+router.patch(
+  "/patchAvatar",
+  uploadAvatarCloud.single("avatar"),
+  asyncWrapper(fileUploadController)
+);
 
 module.exports = { ownerRouter: router };
