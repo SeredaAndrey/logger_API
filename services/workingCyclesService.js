@@ -3,6 +3,28 @@ const WorkingCycles = require("../schemas/workingCyclesSchemas");
 const getWorkingCyclesWithoutFilter = async (ownerId) => {
   return await WorkingCycles.find({ owner: ownerId });
 };
+const getWorkingCyclesByLastMonth = async (ownerId) => {
+  const currentDate = new Date();
+  const startOfMonth = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    1
+  );
+  const endOfMonth = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth() + 1,
+    0
+  );
+  return await WorkingCycles.find({
+    owner: ownerId,
+    timestampStart: {
+      $gte: startOfMonth,
+    },
+    timestampStop: {
+      $lte: endOfMonth,
+    },
+  });
+};
 
 const getAllWorkingCyclesService = async (
   ownerId,
@@ -41,6 +63,7 @@ const deleteWorkingCycleService = async (cycleId, ownerId) => {
 
 module.exports = {
   getWorkingCyclesWithoutFilter,
+  getWorkingCyclesByLastMonth,
   getAllWorkingCyclesService,
   getWorkingCycleService,
   postNewWorkingCycleService,

@@ -10,6 +10,7 @@ const {
 const { FoundingError, ValidateError } = require("../middleware/errorHandler");
 const {
   getWorkingCyclesWithoutFilter,
+  getWorkingCyclesByLastMonth,
 } = require("../services/workingCyclesService");
 
 const getCalcDataController = async (req, res, next) => {
@@ -76,11 +77,16 @@ const deleteCalcDataController = async (req, res, next) => {
 };
 
 const calculateTotalData = async (ownerId) => {
-  const body = { totalGeneration: 0, totalWorkingTime: 0 };
-  const cycles = await getWorkingCyclesWithoutFilter(ownerId);
-  if (cycles) {
-    // console.log("cycles: ", cycles);
-    cycles.forEach((item) => {
+  const body = {
+    totalGeneration: 0,
+    totalWorkingTime: 0,
+    totalGenerationMonth: 0,
+    totalWorkingTimeMonth: 0,
+  };
+  const allCycles = await getWorkingCyclesWithoutFilter(ownerId);
+  const monthCycles = await getWorkingCyclesByLastMonth(ownerId);
+  if (allCycles) {
+    allCycles.forEach((item) => {
       if (item.volumeElecricalGeneration) {
         body.totalGeneration += parseInt(item.volumeElecricalGeneration);
       }
@@ -89,7 +95,18 @@ const calculateTotalData = async (ownerId) => {
       }
     });
   }
-  // console.log("ownerId: ", ownerId);
+  if (monthCycles) {
+    monthCycles.forEach((item) => {
+      if (item.volumeElecricalGeneration) {
+        body.totalGenerationMonth += parseInt(item.volumeElecricalGeneration);
+      }
+      if (item.workingTimeOfCycle) {
+        body.totalWorkingTimeMonth += parseInt(item.workingTimeOfCycle);
+      }
+    });
+  }
+
+  // console.log("monthCycles: ", monthCycles);
 
   await CalcDataService(ownerId, body);
 };
