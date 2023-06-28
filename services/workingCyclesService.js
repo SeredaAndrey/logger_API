@@ -1,7 +1,7 @@
 const WorkingCycles = require("../schemas/workingCyclesSchemas");
 
 const getWorkingCyclesWithoutFilter = async (ownerId) => {
-  return await WorkingCycles.find({ ownerId });
+  return await WorkingCycles.find({ owner: ownerId });
 };
 
 const getAllWorkingCyclesService = async (
