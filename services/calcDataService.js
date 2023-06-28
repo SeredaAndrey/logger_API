@@ -29,9 +29,16 @@ const deleteCalcDataService = async (calcDataId, ownerId) => {
   });
 };
 
+const CalcDataService = async (ownerId, body) => {
+  await CalculatingData.findByIdAndUpdate({ owner: ownerId }, body, {
+    new: true,
+  });
+};
+
 module.exports = {
   getCalcDataService,
   postNewCalcDataService,
   patchCalcDataService,
   deleteCalcDataService,
+  CalcDataService,
 };

@@ -5,6 +5,7 @@ const {
   postNewCalcDataService,
   patchCalcDataService,
   deleteCalcDataService,
+  CalcDataService,
 } = require("../services/calcDataService");
 const { FoundingError, ValidateError } = require("../middleware/errorHandler");
 const {
@@ -75,10 +76,18 @@ const deleteCalcDataController = async (req, res, next) => {
 };
 
 const calculateTotalData = async (ownerId) => {
+  const body = {};
   const cycles = await getWorkingCyclesWithoutFilter(ownerId);
   if (cycles) {
     console.log("cycles: ", cycles);
+    cycles.forEach((item) => {
+      if (item.volumeElecricalGeneration) {
+        body.totalGenerationPower += item.volumeElecricalGeneration;
+      }
+    });
   }
+
+  await CalcDataService(ownerId, body);
 };
 
 module.exports = {
