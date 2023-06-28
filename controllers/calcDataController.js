@@ -11,6 +11,7 @@ const { FoundingError, ValidateError } = require("../middleware/errorHandler");
 const {
   getWorkingCyclesWithoutFilter,
   getWorkingCyclesByLastMonth,
+  getWorkigCyclesLatestChangeOil,
 } = require("../services/workingCyclesService");
 
 const getCalcDataController = async (req, res, next) => {
@@ -82,9 +83,11 @@ const calculateTotalData = async (ownerId) => {
     totalWorkingTime: 0,
     totalGenerationMonth: 0,
     totalWorkingTimeMonth: 0,
+    timeToChangeOil: 0,
   };
   const allCycles = await getWorkingCyclesWithoutFilter(ownerId);
   const monthCycles = await getWorkingCyclesByLastMonth(ownerId);
+  const latestChangeOilCycles = await getWorkigCyclesLatestChangeOil(ownerId);
   if (allCycles) {
     allCycles.forEach((item) => {
       if (item.volumeElecricalGeneration) {
@@ -105,8 +108,13 @@ const calculateTotalData = async (ownerId) => {
       }
     });
   }
-
-  // console.log("monthCycles: ", monthCycles);
+  if (latestChangeOilCycles) {
+    latestChangeOilCycles.forEach((item) => {
+      if (item.workingTimeOfCycle) {
+        body.timeToChangeOil += parseInt(item.workingTimeOfCycle);
+      }
+    });
+  }
 
   await CalcDataService(ownerId, body);
 };

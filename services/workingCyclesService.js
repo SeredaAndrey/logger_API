@@ -25,6 +25,19 @@ const getWorkingCyclesByLastMonth = async (ownerId) => {
     },
   });
 };
+const getWorkigCyclesLatestChangeOil = async (ownerId) => {
+  const latestOilChange = await WorkingCycles.findOne({
+    owner: ownerId,
+    changeOil: true,
+  })
+    .sort({ timestampStart: -1 })
+    .limit(1);
+  const oilChangeDate = latestOilChange.timestampStart;
+  return await WorkingCycles.find({
+    owner: ownerId,
+    timestampStart: { $gt: oilChangeDate },
+  });
+};
 
 const getAllWorkingCyclesService = async (
   ownerId,
@@ -64,6 +77,7 @@ const deleteWorkingCycleService = async (cycleId, ownerId) => {
 module.exports = {
   getWorkingCyclesWithoutFilter,
   getWorkingCyclesByLastMonth,
+  getWorkigCyclesLatestChangeOil,
   getAllWorkingCyclesService,
   getWorkingCycleService,
   postNewWorkingCycleService,
