@@ -105,7 +105,7 @@ const postNewWorkingCycleController = async (req, res, next) => {
         data,
       },
     });
-    calculateTotalData();
+    calculateTotalData(ownerId);
   } else throw new ValidateError(reqValidate.error);
 };
 
@@ -124,7 +124,7 @@ const patchWorkingCycleController = async (req, res, next) => {
           data,
         },
       });
-      calculateTotalData();
+      calculateTotalData(ownerId);
     } else throw new FoundingError("Working cycle not found");
   } else throw new ValidateError(reqValidate.error);
 };
@@ -138,7 +138,7 @@ const deleteWorkingCycleController = async (req, res, next) => {
       message: "Working cycle deleted",
       code: 200,
     });
-    calculateTotalData();
+    calculateTotalData(ownerId);
   } else {
     throw new FoundingError("Working cycle not found");
   }

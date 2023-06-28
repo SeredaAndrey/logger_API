@@ -7,6 +7,9 @@ const {
   deleteCalcDataService,
 } = require("../services/calcDataService");
 const { FoundingError, ValidateError } = require("../middleware/errorHandler");
+const {
+  getWorkingCyclesWithoutFilter,
+} = require("../services/workingCyclesService");
 
 const getCalcDataController = async (req, res, next) => {
   const ownerId = req.owner._id;
@@ -71,8 +74,11 @@ const deleteCalcDataController = async (req, res, next) => {
   }
 };
 
-const calculateTotalData = async (req, res, next) => {
-  console.log("calculate data");
+const calculateTotalData = async (ownerId) => {
+  const cycles = await getWorkingCyclesWithoutFilter(ownerId);
+  if (cycles) {
+    console.log("cycles: ", cycles);
+  }
 };
 
 module.exports = {

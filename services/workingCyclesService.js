@@ -1,5 +1,9 @@
 const WorkingCycles = require("../schemas/workingCyclesSchemas");
 
+const getWorkingCyclesWithoutFilter = async (ownerId) => {
+  return await WorkingCycles.find({ ownerId });
+};
+
 const getAllWorkingCyclesService = async (
   ownerId,
   { skip, limit, correctSort, correctFilter, dateStart, dateStop }
@@ -36,6 +40,7 @@ const deleteWorkingCycleService = async (cycleId, ownerId) => {
 };
 
 module.exports = {
+  getWorkingCyclesWithoutFilter,
   getAllWorkingCyclesService,
   getWorkingCycleService,
   postNewWorkingCycleService,
