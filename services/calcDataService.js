@@ -30,7 +30,7 @@ const deleteCalcDataService = async (calcDataId, ownerId) => {
 };
 
 const CalcDataService = async (ownerId, body) => {
-  await CalculatingData.findByIdAndUpdate({ owner: ownerId }, body, {
+  return await CalculatingData.findOneAndUpdate({ owner: ownerId }, body, {
     new: true,
   });
 };

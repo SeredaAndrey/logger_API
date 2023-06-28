@@ -76,16 +76,20 @@ const deleteCalcDataController = async (req, res, next) => {
 };
 
 const calculateTotalData = async (ownerId) => {
-  const body = {};
+  const body = { totalGeneration: 0, totalWorkingTime: 0 };
   const cycles = await getWorkingCyclesWithoutFilter(ownerId);
   if (cycles) {
-    console.log("cycles: ", cycles);
+    // console.log("cycles: ", cycles);
     cycles.forEach((item) => {
       if (item.volumeElecricalGeneration) {
-        body.totalGenerationPower += item.volumeElecricalGeneration;
+        body.totalGeneration += parseInt(item.volumeElecricalGeneration);
+      }
+      if (item.workingTimeOfCycle) {
+        body.totalWorkingTime += parseInt(item.workingTimeOfCycle);
       }
     });
   }
+  // console.log("ownerId: ", ownerId);
 
   await CalcDataService(ownerId, body);
 };
