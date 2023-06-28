@@ -10,6 +10,7 @@ const {
   getRequestSchema,
   workingCyclesSchema,
 } = require("../validate/workingCyclesValidate");
+const { calculateTotalData } = require("./calcDataController");
 
 const getAllWorkingCyclesController = async (req, res, next) => {
   const ownerId = req.owner._id;
@@ -104,6 +105,7 @@ const postNewWorkingCycleController = async (req, res, next) => {
         data,
       },
     });
+    calculateTotalData();
   } else throw new ValidateError(reqValidate.error);
 };
 
@@ -122,6 +124,7 @@ const patchWorkingCycleController = async (req, res, next) => {
           data,
         },
       });
+      calculateTotalData();
     } else throw new FoundingError("Working cycle not found");
   } else throw new ValidateError(reqValidate.error);
 };
@@ -135,6 +138,7 @@ const deleteWorkingCycleController = async (req, res, next) => {
       message: "Working cycle deleted",
       code: 200,
     });
+    calculateTotalData();
   } else {
     throw new FoundingError("Working cycle not found");
   }

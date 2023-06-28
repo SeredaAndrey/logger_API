@@ -71,9 +71,14 @@ const deleteCalcDataController = async (req, res, next) => {
   }
 };
 
+const calculateTotalData = async (req, res, next) => {
+  console.log("calculate data");
+};
+
 module.exports = {
   getCalcDataController,
   postNewCalcDataController,
   patchCalcDataController,
   deleteCalcDataController,
+  calculateTotalData,
 };
