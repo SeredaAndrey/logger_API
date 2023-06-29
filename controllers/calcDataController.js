@@ -14,6 +14,8 @@ const {
   getWorkigCyclesLatestChangeOil,
 } = require("../services/workingCyclesService");
 
+const { getGeneratorService } = require("../services/generatorService");
+
 const getCalcDataController = async (req, res, next) => {
   const ownerId = req.owner._id;
   const data = await getCalcDataService(ownerId);
@@ -88,6 +90,9 @@ const calculateTotalData = async (ownerId) => {
   const allCycles = await getWorkingCyclesWithoutFilter(ownerId);
   const monthCycles = await getWorkingCyclesByLastMonth(ownerId);
   const latestChangeOilCycles = await getWorkigCyclesLatestChangeOil(ownerId);
+  // const globalSettings = await getGeneralSettingsService(ownerId);
+  const generatorSettings = await getGeneratorService(ownerId);
+  let workingTimeBeforeOilChange = 0;
   if (allCycles) {
     allCycles.forEach((item) => {
       if (item.volumeElecricalGeneration) {
@@ -108,14 +113,16 @@ const calculateTotalData = async (ownerId) => {
       }
     });
   }
-  if (latestChangeOilCycles) {
+  if (latestChangeOilCycles && generatorSettings) {
     latestChangeOilCycles.forEach((item) => {
       if (item.workingTimeOfCycle) {
-        body.timeToChangeOil += parseInt(item.workingTimeOfCycle);
+        workingTimeBeforeOilChange += parseInt(item.workingTimeOfCycle);
       }
     });
+    body.timeToChangeOil =
+      parseInt(generatorSettings.nextChangeOilReglament) * 60 * 60 * 1000 -
+      workingTimeBeforeOilChange;
   }
-
   await CalcDataService(ownerId, body);
 };
 
