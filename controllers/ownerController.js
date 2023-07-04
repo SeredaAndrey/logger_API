@@ -68,6 +68,7 @@ const patchOwnerNameController = async (req, res, next) => {
           loggedIn: data.loggedIn,
           avatarUrl: data.avatarUrl,
           verify: data.verify,
+          inerfaceLanguage: data.inerfaceLanguage,
         },
       });
     } else {

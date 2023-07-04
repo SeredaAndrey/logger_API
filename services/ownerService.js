@@ -11,6 +11,7 @@ const getOwnerDataService = async (_id) => {
       verify: 1,
       firstName: 1,
       seccondName: 1,
+      inerfaceLanguage: 1,
     }
   );
 };

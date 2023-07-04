@@ -42,6 +42,11 @@ const owner = new Schema({
     type: String,
     default: null,
   },
+  inerfaceLanguage: {
+    type: String,
+    enum: ["en", "ua"],
+    default: "en",
+  },
 });
 
 owner.pre("save", async function () {
