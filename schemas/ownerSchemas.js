@@ -44,7 +44,7 @@ const owner = new Schema({
   },
   inerfaceLanguage: {
     type: String,
-    enum: ["en", "ua"],
+    enum: ["en", "ru", "ua"],
     default: "en",
   },
 });

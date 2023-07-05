@@ -14,7 +14,7 @@ const ownerPatchSchema = Joi.object({
     minDomainSegments: 2,
     tlds: { allow: ["com", "net", "ua"] },
   }),
-  inerfaceLanguage: Joi.string().valid("en", "ua"),
+  inerfaceLanguage: Joi.string().valid("en", "ru", "ua"),
 });
 
 const ownerPathSubscriptionSchema = Joi.object({
