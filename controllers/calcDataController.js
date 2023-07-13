@@ -110,6 +110,8 @@ const calculateTotalData = async (ownerId) => {
       }
     });
     if (globalSettings) {
+      if (globalSettings.priceOfGasoline) {
+      }
       console.log("globalSettings: ", globalSettings);
     }
   }
