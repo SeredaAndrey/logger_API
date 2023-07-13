@@ -15,6 +15,9 @@ const {
 } = require("../services/workingCyclesService");
 
 const { getGeneratorService } = require("../services/generatorService");
+const {
+  getGeneralSettingsService,
+} = require("../services/generalSettingsService");
 
 const getCalcDataController = async (req, res, next) => {
   const ownerId = req.owner._id;
@@ -82,15 +85,19 @@ const deleteCalcDataController = async (req, res, next) => {
 const calculateTotalData = async (ownerId) => {
   const body = {
     totalGeneration: 0,
+    totalCostGeneration: 0,
     totalWorkingTime: 0,
     totalGenerationMonth: 0,
+    totalCostGenerationMonth: 0,
+    totalAverageCostGeneration: 0,
     totalWorkingTimeMonth: 0,
     timeToChangeOil: 0,
+    totalAverageFuelConsumption: 0,
   };
   const allCycles = await getWorkingCyclesWithoutFilter(ownerId);
   const monthCycles = await getWorkingCyclesByLastMonth(ownerId);
   const latestChangeOilCycles = await getWorkigCyclesLatestChangeOil(ownerId);
-  // const globalSettings = await getGeneralSettingsService(ownerId);
+  const globalSettings = await getGeneralSettingsService(ownerId);
   const generatorSettings = await getGeneratorService(ownerId);
   let workingTimeBeforeOilChange = 0;
   if (allCycles) {
@@ -102,6 +109,9 @@ const calculateTotalData = async (ownerId) => {
         body.totalWorkingTime += parseInt(item.workingTimeOfCycle);
       }
     });
+    if (globalSettings) {
+      console.log("globalSettings: ", globalSettings);
+    }
   }
   if (monthCycles) {
     monthCycles.forEach((item) => {

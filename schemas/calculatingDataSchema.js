@@ -8,7 +8,19 @@ const calculatingData = new Schema(
       type: Number,
       default: null,
     },
+    totalCostGeneration: {
+      type: Number,
+      default: null,
+    },
     totalGenerationMonth: {
+      type: Number,
+      default: null,
+    },
+    totalCostGenerationMonth: {
+      type: Number,
+      default: null,
+    },
+    totalAverageCostGeneration: {
       type: Number,
       default: null,
     },
@@ -21,6 +33,10 @@ const calculatingData = new Schema(
       default: null,
     },
     timeToChangeOil: {
+      type: Number,
+      default: null,
+    },
+    totalAverageFuelConsumption: {
       type: Number,
       default: null,
     },
