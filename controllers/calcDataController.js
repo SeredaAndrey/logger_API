@@ -110,8 +110,10 @@ const calculateTotalData = async (ownerId) => {
       }
     });
     if (globalSettings) {
-      if (globalSettings.priceOfGasoline) {
-      }
+      // totalAverageFuelConsumption - загальна витрата палива дорівнює кількість спожитого палива поділена на напрацьований час
+      // totalCostGeneration - загальна вартість сгенерованої електроенергії
+      // totalCostGenerationMonth - загальна вартість сгенерованої електроенергії за місяць
+      // totalAverageCostGeneration - середня вартість сгенерованої електроенергії
       console.log("globalSettings: ", globalSettings);
     }
   }
