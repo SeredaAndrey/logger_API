@@ -31,6 +31,7 @@ const getCalcDataController = async (req, res, next) => {
     });
   } else {
     await postNewCalcDataService(ownerId, (body = {}));
+    await calculateTotalData(ownerId);
     const data = await getCalcDataService(ownerId);
     if (data) {
       res.status(200).json({
