@@ -134,6 +134,15 @@ const calculateTotalData = async (ownerId) => {
       body.totalAverageFuelConsumption = parseFloat(
         (fuelLevel / (body.totalWorkingTime / 1000 / 60 / 60)).toFixed(2)
       );
+      body.totalAverageWorkingCost = parseFloat(
+        (
+          fuelLevel *
+          parseInt(
+            globalSettings.priceOfGasoline /
+              (body.totalWorkingTime / 1000 / 60 / 60)
+          )
+        ).toFixed(2)
+      );
     }
     if (globalSettings && body.totalGeneration !== 0) {
       body.totalCostGeneration = parseFloat(
