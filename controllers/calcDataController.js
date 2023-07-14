@@ -21,7 +21,7 @@ const {
 
 const getCalcDataController = async (req, res, next) => {
   const ownerId = req.owner._id;
-  console.log("ownerId: ", ownerId);
+  // console.log("ownerId: ", ownerId);
   const data = await getCalcDataService(ownerId);
   if (data) {
     res.status(200).json({
@@ -30,6 +30,7 @@ const getCalcDataController = async (req, res, next) => {
       calculationData: { data },
     });
   } else {
+    await postNewCalcDataService(ownerId, (body = {}));
     throw new FoundingError("Calculation data not found");
   }
 };
