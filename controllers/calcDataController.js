@@ -125,7 +125,8 @@ const calculateTotalData = async (ownerId) => {
 
     if (globalSettings) {
       body.totalCostGeneration =
-        (fuelLevel * globalSettings.priceOfGasoline) / body.totalGeneration;
+        (fuelLevel * parseInt(globalSettings.priceOfGasoline)) /
+        body.totalGeneration;
     }
   }
   if (monthCycles) {
