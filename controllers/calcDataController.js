@@ -29,7 +29,6 @@ const getCalcDataController = async (req, res, next) => {
       calculationData: { data },
     });
   } else {
-    await postNewCalcDataController(ownerId);
     throw new FoundingError("Calculation data not found");
   }
 };
