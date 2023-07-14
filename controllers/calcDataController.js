@@ -21,6 +21,7 @@ const {
 
 const getCalcDataController = async (req, res, next) => {
   const ownerId = req.owner._id;
+  console.log("ownerId: ", ownerId);
   const data = await getCalcDataService(ownerId);
   if (data) {
     res.status(200).json({
