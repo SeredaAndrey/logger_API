@@ -102,13 +102,13 @@ const calculateTotalData = async (ownerId) => {
     totalWorkingTime: 0, //загальний час роботи генератора за весь час (h:m) VV
     totalWorkingTimeMonth: 0, //час роботи генератора за поточний місяць (h:m) VV
 
-    totalCostGeneration: 0, //загальна вартість сгенерованої електроенергії (uah kW*h)
-    totalCostGenerationMonth: 0, //загальна вартість сгенерованої електроенергії за поточний місяць (uah kW*h)
+    totalCostGeneration: 0, //загальна вартість сгенерованої електроенергії (uah kW*h) VV
+    totalCostGenerationMonth: 0, //загальна вартість сгенерованої електроенергії за поточний місяць (uah kW*h) VV
 
     timeToChangeOil: 0, //час до наступної заміни мастила (h:m) VV
 
     totalAverageFuelConsumption: 0, //середне споживання палива (l/h)
-    totalAverageWorkingCost: 0, //середня вартість сгенерованої електроенергії (uah kW*h)
+    totalAverageWorkingCost: 0, //середня вартість моттогодини (uah/h)
   };
   const allCycles = await getWorkingCyclesWithoutFilter(ownerId);
   const monthCycles = await getWorkingCyclesByLastMonth(ownerId);
@@ -130,7 +130,9 @@ const calculateTotalData = async (ownerId) => {
         fuelLevel += parseInt(item.refueling);
       }
     });
-
+    if (fuelLevel && body.totalWorkingTime) {
+      body.totalAverageFuelConsumption = fuelLevel / body.totalWorkingTime;
+    }
     if (globalSettings && body.totalGeneration !== 0) {
       body.totalCostGeneration = parseFloat(
         (
