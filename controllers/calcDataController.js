@@ -132,9 +132,12 @@ const calculateTotalData = async (ownerId) => {
     });
 
     if (globalSettings && body.totalGeneration !== 0) {
-      body.totalCostGeneration =
-        (fuelLevel * parseInt(globalSettings.priceOfGasoline)) /
-        body.totalGeneration;
+      body.totalCostGeneration = parseFloat(
+        (
+          (fuelLevel * parseInt(globalSettings.priceOfGasoline)) /
+          body.totalGeneration
+        ).toFixed(2)
+      );
     }
   }
   if (monthCycles) {
@@ -150,9 +153,12 @@ const calculateTotalData = async (ownerId) => {
       }
     });
     if (globalSettings && body.totalGenerationMonth !== 0) {
-      body.totalCostGenerationMonth =
-        (fuelLevelMonth * parseInt(globalSettings.priceOfGasoline)) /
-        body.totalGenerationMonth;
+      body.totalCostGenerationMonth = parseFloat(
+        (
+          (fuelLevelMonth * parseInt(globalSettings.priceOfGasoline)) /
+          body.totalGenerationMonth
+        ).toFixed(2)
+      );
     }
   }
   if (latestChangeOilCycles && generatorSettings) {
