@@ -94,10 +94,10 @@ const calculateTotalData = async (ownerId) => {
     totalWorkingTime: 0, //загальний час роботи генератора за весь час (h:m) VV
     totalWorkingTimeMonth: 0, //час роботи генератора за поточний місяць (h:m) VV
 
-    totalCostGeneration: 0, //загальна вартість сгенерованої електроенергії (uah kW/h)
-    totalCostGenerationMonth: 0, //загальна вартість сгенерованої електроенергії за поточний місяць (uah kW/h)
+    totalCostGeneration: 0, //загальна вартість сгенерованої електроенергії (uah kW*h)
+    totalCostGenerationMonth: 0, //загальна вартість сгенерованої електроенергії за поточний місяць (uah kW*h)
 
-    totalAverageCostGeneration: 0, //середня вартість сгенерованої електроенергії (uah kW/h)
+    totalAverageCostGeneration: 0, //середня вартість сгенерованої електроенергії (uah kW*h)
 
     timeToChangeOil: 0, //час до наступної заміни мастила (h:m) VV
 
@@ -109,6 +109,7 @@ const calculateTotalData = async (ownerId) => {
   const globalSettings = await getGeneralSettingsService(ownerId);
   const generatorSettings = await getGeneratorService(ownerId);
   let workingTimeBeforeOilChange = 0;
+  let fuelLevel = 0;
   if (allCycles) {
     allCycles.forEach((item) => {
       if (item.volumeElecricalGeneration) {
@@ -117,10 +118,15 @@ const calculateTotalData = async (ownerId) => {
       if (item.workingTimeOfCycle) {
         body.totalWorkingTime += parseInt(item.workingTimeOfCycle);
       }
+      if (item.refueling) {
+        fuelLevel += parseInt(item.fuelLevel);
+      }
     });
-    // if (globalSettings) {
-    //   console.log("globalSettings: ", globalSettings);
-    // }
+
+    if (globalSettings) {
+      body.totalCostGeneration =
+        (fuelLevel * globalSettings.priceOfGasoline) / body.totalGeneration;
+    }
   }
   if (monthCycles) {
     monthCycles.forEach((item) => {
