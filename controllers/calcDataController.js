@@ -110,6 +110,7 @@ const calculateTotalData = async (ownerId) => {
   const generatorSettings = await getGeneratorService(ownerId);
   let workingTimeBeforeOilChange = 0;
   let fuelLevel = 0;
+  let fuelLevelMonth = 0;
   if (allCycles) {
     allCycles.forEach((item) => {
       if (item.volumeElecricalGeneration) {
@@ -137,7 +138,15 @@ const calculateTotalData = async (ownerId) => {
       if (item.workingTimeOfCycle) {
         body.totalWorkingTimeMonth += parseInt(item.workingTimeOfCycle);
       }
+      if (item.refueling) {
+        fuelLevelMonth += parseInt(item.refueling);
+      }
     });
+    if (globalSettings) {
+      body.totalCostGenerationMonth =
+        (fuelLevelMonth * parseInt(globalSettings.priceOfGasoline)) /
+        body.totalGenerationMonth;
+    }
   }
   if (latestChangeOilCycles && generatorSettings) {
     latestChangeOilCycles.forEach((item) => {
