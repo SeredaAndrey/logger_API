@@ -119,7 +119,7 @@ const calculateTotalData = async (ownerId) => {
         body.totalWorkingTime += parseInt(item.workingTimeOfCycle);
       }
       if (item.refueling) {
-        fuelLevel += parseInt(item.fuelLevel);
+        fuelLevel += parseInt(item.refueling);
       }
     });
 
