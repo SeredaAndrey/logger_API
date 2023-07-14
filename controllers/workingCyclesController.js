@@ -98,6 +98,9 @@ const postNewWorkingCycleController = async (req, res, next) => {
   const reqValidate = workingCyclesSchema.validate(req.body);
   if (!reqValidate.error) {
     const data = await postNewWorkingCycleService(ownerId, body);
+
+    await calculateTotalData(ownerId);
+
     res.status(201).json({
       message: "succes",
       code: 201,
@@ -105,7 +108,6 @@ const postNewWorkingCycleController = async (req, res, next) => {
         data,
       },
     });
-    await calculateTotalData(ownerId);
   } else throw new ValidateError(reqValidate.error);
 };
 
@@ -117,6 +119,8 @@ const patchWorkingCycleController = async (req, res, next) => {
   if (!reqValidate.error) {
     const data = await patchWorkingCycleService(cycleId, ownerId, body);
     if (data) {
+      await calculateTotalData(ownerId);
+
       res.status(200).json({
         message: "succes",
         code: 200,
@@ -124,7 +128,6 @@ const patchWorkingCycleController = async (req, res, next) => {
           data,
         },
       });
-      await calculateTotalData(ownerId);
     } else throw new FoundingError("Working cycle not found");
   } else throw new ValidateError(reqValidate.error);
 };
@@ -134,11 +137,12 @@ const deleteWorkingCycleController = async (req, res, next) => {
   const { cycleId } = req.params;
   const data = await deleteWorkingCycleService(cycleId, ownerId);
   if (data) {
+    await calculateTotalData(ownerId);
+
     res.status(200).json({
       message: "Working cycle deleted",
       code: 200,
     });
-    await calculateTotalData(ownerId);
   } else {
     throw new FoundingError("Working cycle not found");
   }
