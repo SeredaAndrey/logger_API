@@ -107,7 +107,7 @@ const calculateTotalData = async (ownerId) => {
 
     timeToChangeOil: 0, //час до наступної заміни мастила (h:m) VV
 
-    totalAverageFuelConsumption: 0, //середне споживання палива (l/h)
+    totalAverageFuelConsumption: 0, //середне споживання палива (l/h) VV
     totalAverageWorkingCost: 0, //середня вартість моттогодини (uah/h)
   };
   const allCycles = await getWorkingCyclesWithoutFilter(ownerId);
@@ -130,7 +130,7 @@ const calculateTotalData = async (ownerId) => {
         fuelLevel += parseInt(item.refueling);
       }
     });
-    if (fuelLevel && body.totalWorkingTime) {
+    if (body.totalWorkingTime !== 0) {
       body.totalAverageFuelConsumption = parseFloat(
         (fuelLevel / body.totalWorkingTime).toFixed(2)
       );
