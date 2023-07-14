@@ -97,11 +97,10 @@ const calculateTotalData = async (ownerId) => {
     totalCostGeneration: 0, //загальна вартість сгенерованої електроенергії (uah kW*h)
     totalCostGenerationMonth: 0, //загальна вартість сгенерованої електроенергії за поточний місяць (uah kW*h)
 
-    totalAverageCostGeneration: 0, //середня вартість сгенерованої електроенергії (uah kW*h)
-
     timeToChangeOil: 0, //час до наступної заміни мастила (h:m) VV
 
     totalAverageFuelConsumption: 0, //середне споживання палива (l/h)
+    totalAverageWorkingCost: 0, //середня вартість сгенерованої електроенергії (uah kW*h)
   };
   const allCycles = await getWorkingCyclesWithoutFilter(ownerId);
   const monthCycles = await getWorkingCyclesByLastMonth(ownerId);

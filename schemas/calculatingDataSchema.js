@@ -20,7 +20,7 @@ const calculatingData = new Schema(
       type: Number,
       default: null,
     },
-    totalAverageCostGeneration: {
+    totalAverageWorkingCost: {
       type: Number,
       default: null,
     },
