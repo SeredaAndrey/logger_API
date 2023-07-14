@@ -99,7 +99,7 @@ const postNewWorkingCycleController = async (req, res, next) => {
   if (!reqValidate.error) {
     const data = await postNewWorkingCycleService(ownerId, body);
 
-    await calculateTotalData(ownerId);
+    // await calculateTotalData(ownerId);
 
     res.status(201).json({
       message: "succes",
@@ -119,7 +119,7 @@ const patchWorkingCycleController = async (req, res, next) => {
   if (!reqValidate.error) {
     const data = await patchWorkingCycleService(cycleId, ownerId, body);
     if (data) {
-      await calculateTotalData(ownerId);
+      // await calculateTotalData(ownerId);
 
       res.status(200).json({
         message: "succes",
@@ -137,7 +137,7 @@ const deleteWorkingCycleController = async (req, res, next) => {
   const { cycleId } = req.params;
   const data = await deleteWorkingCycleService(cycleId, ownerId);
   if (data) {
-    await calculateTotalData(ownerId);
+    // await calculateTotalData(ownerId);
 
     res.status(200).json({
       message: "Working cycle deleted",
