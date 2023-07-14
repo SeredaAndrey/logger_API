@@ -31,7 +31,14 @@ const getCalcDataController = async (req, res, next) => {
     });
   } else {
     await postNewCalcDataService(ownerId, (body = {}));
-    throw new FoundingError("Calculation data not found");
+    const data = await getCalcDataService(ownerId);
+    if (data) {
+      res.status(200).json({
+        message: "succes",
+        code: 200,
+        calculationData: { data },
+      });
+    }
   }
 };
 
