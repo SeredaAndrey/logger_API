@@ -32,11 +32,13 @@ const getWorkigCyclesLatestChangeOil = async (ownerId) => {
   })
     .sort({ timestampStart: -1 })
     .limit(1);
-  const oilChangeDate = latestOilChange.timestampStart;
-  return await WorkingCycles.find({
-    owner: ownerId,
-    timestampStart: { $gt: oilChangeDate },
-  });
+  if (latestOilChange) {
+    const oilChangeDate = latestOilChange.timestampStart;
+    return await WorkingCycles.find({
+      owner: ownerId,
+      timestampStart: { $gt: oilChangeDate },
+    });
+  }
 };
 
 const getAllWorkingCyclesService = async (
