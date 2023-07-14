@@ -131,7 +131,9 @@ const calculateTotalData = async (ownerId) => {
       }
     });
     if (fuelLevel && body.totalWorkingTime) {
-      body.totalAverageFuelConsumption = fuelLevel / body.totalWorkingTime;
+      body.totalAverageFuelConsumption = parseFloat(
+        (fuelLevel / body.totalWorkingTime).toFixed(2)
+      );
     }
     if (globalSettings && body.totalGeneration !== 0) {
       body.totalCostGeneration = parseFloat(
