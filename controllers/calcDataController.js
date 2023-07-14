@@ -28,7 +28,10 @@ const getCalcDataController = async (req, res, next) => {
       code: 200,
       calculationData: { data },
     });
-  } else throw new FoundingError("Calculation data not found");
+  } else {
+    await postNewCalcDataController(ownerId);
+    throw new FoundingError("Calculation data not found");
+  }
 };
 
 const postNewCalcDataController = async (req, res, next) => {
@@ -84,15 +87,20 @@ const deleteCalcDataController = async (req, res, next) => {
 
 const calculateTotalData = async (ownerId) => {
   const body = {
-    totalGeneration: 0,
-    totalCostGeneration: 0,
-    totalWorkingTime: 0,
-    totalGenerationMonth: 0,
-    totalCostGenerationMonth: 0,
-    totalAverageCostGeneration: 0,
-    totalWorkingTimeMonth: 0,
-    timeToChangeOil: 0,
-    totalAverageFuelConsumption: 0,
+    totalGeneration: 0, //кількість сгенерованої електоенергії за весь період роботи (kW) VV
+    totalGenerationMonth: 0, //кількість сгенерованої електоенергії за поточний місяць (kW) VV
+
+    totalWorkingTime: 0, //загальний час роботи генератора за весь час (h:m) VV
+    totalWorkingTimeMonth: 0, //час роботи генератора за поточний місяць (h:m) VV
+
+    totalCostGeneration: 0, //загальна вартість сгенерованої електроенергії (uah kW/h)
+    totalCostGenerationMonth: 0, //загальна вартість сгенерованої електроенергії за поточний місяць (uah kW/h)
+
+    totalAverageCostGeneration: 0, //середня вартість сгенерованої електроенергії (uah kW/h)
+
+    timeToChangeOil: 0, //час до наступної заміни мастила (h:m) VV
+
+    totalAverageFuelConsumption: 0, //середне споживання палива (l/h)
   };
   const allCycles = await getWorkingCyclesWithoutFilter(ownerId);
   const monthCycles = await getWorkingCyclesByLastMonth(ownerId);
@@ -109,13 +117,9 @@ const calculateTotalData = async (ownerId) => {
         body.totalWorkingTime += parseInt(item.workingTimeOfCycle);
       }
     });
-    if (globalSettings) {
-      // totalAverageFuelConsumption - загальна витрата палива дорівнює кількість спожитого палива поділена на напрацьований час
-      // totalCostGeneration - загальна вартість сгенерованої електроенергії
-      // totalCostGenerationMonth - загальна вартість сгенерованої електроенергії за місяць
-      // totalAverageCostGeneration - середня вартість сгенерованої електроенергії
-      console.log("globalSettings: ", globalSettings);
-    }
+    // if (globalSettings) {
+    //   console.log("globalSettings: ", globalSettings);
+    // }
   }
   if (monthCycles) {
     monthCycles.forEach((item) => {
