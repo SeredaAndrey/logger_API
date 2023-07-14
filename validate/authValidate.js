@@ -8,8 +8,8 @@ const ownerSchema = Joi.object({
 });
 
 const ownerPatchSchema = Joi.object({
-  firstName: Joi.string().min(3).max(15),
-  seccondName: Joi.string().min(3).max(15),
+  firstName: Joi.string().min(1).max(15),
+  seccondName: Joi.string().min(1).max(15),
   email: Joi.string().email({
     minDomainSegments: 2,
     tlds: { allow: ["com", "net", "ua"] },
