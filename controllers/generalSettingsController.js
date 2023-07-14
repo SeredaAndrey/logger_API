@@ -8,6 +8,7 @@ const {
 const {
   generalSettingsSchema,
 } = require("../validate/generalSettingsValidate");
+const { calculateTotalData } = require("./calcDataController");
 
 const getGeneralSettingsController = async (req, res, next) => {
   const ownerId = req.owner._id;
@@ -35,6 +36,7 @@ const postGeneralSettingsController = async (req, res, next) => {
           data,
         },
       });
+      await calculateTotalData(ownerId);
     } else throw new FoundingError("General Settings alredy exists");
   } else throw new ValidateError(reqValidate.error);
 };
@@ -54,6 +56,7 @@ const patchGeneralSettingsController = async (req, res, next) => {
           data,
         },
       });
+      await calculateTotalData(ownerId);
     } else throw new FoundingError("General setting not found");
   } else throw new ValidateError(reqValidate.error);
 };
