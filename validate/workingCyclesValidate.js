@@ -4,9 +4,9 @@ const workingCyclesSchema = Joi.object({
   timestampStart: Joi.date(),
   timestampStop: Joi.date(),
   workingTimeOfCycle: Joi.number(),
-  volumeElecricalGeneration: Joi.number().positive(),
+  volumeElecricalGeneration: Joi.number().integer().min(0).max(100),
   changeOil: Joi.boolean(),
-  refueling: Joi.number(),
+  refueling: Joi.number().integer().min(0).max(100),
 });
 
 const getRequestSchema = Joi.object({
